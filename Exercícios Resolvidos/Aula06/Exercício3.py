@@ -40,6 +40,7 @@ elif opcao=="b" or opcao=="B":
 
     num1=int(input("Escolha um valor para tirar a média: "))
     num2=int(input("Escolha um segundo valor para tirar a média: "))
+    
     resultado=(num1+num2)/2
 
     print(f"A média dos número {num1} e {num2} é de: {resultado}")
@@ -48,9 +49,16 @@ elif opcao=="c" or opcao=="C":
 
     num1=int(input("Escolha um valor para ser dividido: "))
     num2=int(input("Escolha um segundo valor para dividir o primeiro valor: "))
-    resultado=num1/num2
+    
+    if num2!=0:
+    
+        resultado=num1/num2
 
-    print(f"A divisão de {num1} por {num2} é de: {resultado}")
+        print(f"A divisão de {num1} por {num2} é de: {resultado}")
+
+    else:
+
+        print("Divisor = 0, operação não é possível!")
 
 elif opcao=="d" or opcao=="D":
 
