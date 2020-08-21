@@ -2,6 +2,7 @@
 # Faça um programa que peça 3 números inteiros e mostre o os tês em ordem crescente.
 # 
 #
+#Jeito complicado mas que deu certo até para números iguais.
 valor1=int(input("Insira um primeiro valor: "))
 valor2=int(input("Insira um segundo valor: "))
 valor3=int(input("Insira um terceiro valor: "))
