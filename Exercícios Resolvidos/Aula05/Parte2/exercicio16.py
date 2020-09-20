@@ -25,26 +25,40 @@ Com qual o combustível você deseja abastecer?
 
 Entre com a opção aqui: 
 """))
-qtdecombu=int(input("Quantos litros você gostaria de abastecer? "))
+
 
 if opcao==1:
+
+    qtdecombu=int(input("Quantos litros você gostaria de abastecer? "))
     
-    if qtdecombu <=20:
-        print(f"Você abasteceu {qtdecombu}litros de Gasolina não recebeu desconto.")
+    if 0< qtdecombu <=20:
+        print(f"Você abasteceu {qtdecombu} litros de Gasolina e não recebeu desconto.")
+    elif qtdecombu>20:
+        print(f"Você abasteceu {qtdecombu} litros de Gasolina e recebeu 10% de desconto.")
     else:
-        print(f"Você abasteceu {qtdecombu}litros de Gasolina e recebeu 10% de desconto.")
+        print("Você entrou com um valor inválido.")
 
 elif opcao==2:
-    if qtdecombu<=10:
-        print(f"Você abasteceu {qtdecombu}litros de Diesel e recebeu 1.5% de desconto.")
+
+    qtdecombu=int(input("Quantos litros você gostaria de abastecer? "))
+
+    if 0<qtdecombu<=10:
+        print(f"Você abasteceu {qtdecombu} litros de Diesel e recebeu 1.5% de desconto.")
+    elif qtdecombu>10:
+        print(f"Você abasteceu {qtdecombu} litros de Diesel e recebeu 5% de desconto.")
     else:
-        print(f"Você abasteceu {qtdecombu}litros de Diesel e recebeu 5% de desconto.")
+        print("Você entrou com um valor inválido.")
 
 elif opcao==3:
-    if qtdecombu<=10:
-        print(f"Você abasteceu {qtdecombu}litros de Álcool e recebeu 5% de desconto.")
+
+    qtdecombu=int(input("Quantos litros você gostaria de abastecer? "))
+
+    if 0<qtdecombu<=10:
+        print(f"Você abasteceu {qtdecombu} litros de Álcool e recebeu 5% de desconto.")
+    elif qtdecombu>10:
+        print(f"Você abasteceu {qtdecombu} litros de Álcool e recebeu 10% de desconto.")
     else:
-        print(f"Você abasteceu {qtdecombu}litros de Álcool e recebeu 10% de desconto.")
+        print("Você entrou com um valor inválido.")
 
 elif opcao==4:
     print("Operação Encerrada")
