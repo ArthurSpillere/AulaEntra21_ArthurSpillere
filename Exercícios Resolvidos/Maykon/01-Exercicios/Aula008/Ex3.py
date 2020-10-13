@@ -11,6 +11,8 @@ def listar_cadastros(lista_cadastrada):
                 
                 print()
 
+#A função pode receber um ID ou não para ser procurado, se não receber o mesmo
+#deverá ser informado dentro dentro da função
 def procurar_cadastro(lista_cadastrada, id_pessoal = -1):
         if id_pessoal == -1:
                 id_pessoal = int(input("Qual id você deseja procurar?\n"))
