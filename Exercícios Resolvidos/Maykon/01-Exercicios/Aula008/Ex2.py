@@ -18,15 +18,15 @@ def endereco(id_pessoal:int, rua:str, numero:int, complemento:str, bairro:str,
         print("Algum dado foi digitado errado. Favor tentar novamente!")
         return False
     else:
-        endereço_pessoa = {}
-        endereço_pessoa["Rua"] = rua
-        endereço_pessoa["Número"] = numero
-        endereço_pessoa["Complemento"] = complemento
-        endereço_pessoa["Bairro"] = bairro
-        endereço_pessoa["Cidade"] = cidade
-        endereço_pessoa["Estado"] = estado
-        endereço_pessoa["ID"] = id_pessoal
-        lista_enderecos.append(endereço_pessoa)
+        endereco_pessoa = {}
+        endereco_pessoa["Rua"] = rua
+        endereco_pessoa["Número"] = numero
+        endereco_pessoa["Complemento"] = complemento
+        endereco_pessoa["Bairro"] = bairro
+        endereco_pessoa["Cidade"] = cidade
+        endereco_pessoa["Estado"] = estado
+        endereco_pessoa["ID"] = id_pessoal
+        lista_enderecos.append(endereco_pessoa)
 
         return print("Cadastro efetuado com sucesso!")
         
