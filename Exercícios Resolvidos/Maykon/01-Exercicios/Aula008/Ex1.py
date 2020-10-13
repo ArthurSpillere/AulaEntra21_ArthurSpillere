@@ -7,19 +7,22 @@
 #---       caso a pessoa tenha sido cadastrada com sucesso deve ser retornado um id 
 #--- A função deve ser salva em um arquivo diferente do arquivo principal onde será chamada
 
+
 lista_cadastro = []
 
 def cadastrar(nome:str, sobrenome:str, idade:int)->str:
+    #Valida critérios de entrada
     if (nome == "" or nome == None or sobrenome == "" or sobrenome == None or
         idade == "" or idade == None or not isinstance(idade, int)):
         print("Entrada de dados inválida! Tente novamente!")
         return False
-
+    
+     #Realiza cadastro que cumpre pré requisito (18 anos)
     if idade >= 18:
         pessoa = {}
         pessoa['Nome'] = nome
         pessoa['Sobrenome'] = sobrenome
-        pessoa['idade'] = idade
+        pessoa['Idade'] = idade
         pessoa['ID'] = len(lista_cadastro) + 1
 
         lista_cadastro.append(pessoa)
