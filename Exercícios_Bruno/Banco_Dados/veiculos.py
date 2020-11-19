@@ -1,7 +1,7 @@
 #marca, nome, modelo, placa, proprietario, cor, km_rodado, qte_passageiros,
 #motor, combustivel, meio_locomocao.
 
-from func_banco import criar_tabela_pessoa, cadastro_no_banco_veiculo, criar_tabela_veiculo, deletar_no_banco
+# from func_banco import 
 
 class Veiculo():
     def __init__(self, marca, nome, modelo, placa, proprietario, cor, km_rodado,
@@ -27,7 +27,7 @@ class Veiculo():
     
 class Pessoa():
     def __init__(self, nome, data_nascimento, cpf, endereco, salario, profissao,
-                 telefone, nome_de_responsavel, sexo, naturalidade,
+                 telefone, nome_responsavel, sexo, naturalidade,
                  nacionalidade):
         
         self.nome = nome
@@ -37,7 +37,7 @@ class Pessoa():
         self.salario = salario
         self.profissao = profissao
         self.telefone = telefone
-        self.nome_de_responsavel = nome_de_responsavel
+        self.nome_responsavel = nome_responsavel
         self.sexo = sexo
         self.naturalidade = naturalidade
         self.nacionalidade = nacionalidade  
@@ -51,9 +51,20 @@ def main():
     
     criar_tabela_veiculo()
     
-    cadastro_no_banco()
+    carro = Veiculo("Volkswagen", "Gol", "Hatch", "ABC-1234", "Arthur",
+                    "Branca", 13500, 5, 1.6, "Flex", "Terrestre", 13500)
     
-    deletar_no_banco()
+    cadastro = (carro.marca, carro.nome, carro.modelo, carro.placa,
+                carro.proprietario, carro.cor, carro.km_rodado,
+                carro.qte_passageiros, carro.motor, carro.combustivel,
+                carro.meio_locomocao, carro.valor)
     
+    # cadastro_no_banco_veiculo(cadastro)
+    
+    update_veiculo()
+    
+
 if __name__ == "__main__":
     main()
+    
+    
