@@ -1,7 +1,9 @@
 #marca, nome, modelo, placa, proprietario, cor, km_rodado, qte_passageiros,
 #motor, combustivel, meio_locomocao.
 
-# from func_banco import 
+from func_banco import *
+import template as template
+from time import sleep
 
 class Veiculo():
     def __init__(self, marca, nome, modelo, placa, proprietario, cor, km_rodado,
@@ -49,21 +51,65 @@ class Pessoa():
     
 def main():
     
-    criar_tabela_veiculo()
-    
-    carro = Veiculo("Volkswagen", "Gol", "Hatch", "ABC-1234", "Arthur",
-                    "Branca", 13500, 5, 1.6, "Flex", "Terrestre", 13500)
-    
-    cadastro = (carro.marca, carro.nome, carro.modelo, carro.placa,
-                carro.proprietario, carro.cor, carro.km_rodado,
-                carro.qte_passageiros, carro.motor, carro.combustivel,
-                carro.meio_locomocao, carro.valor)
-    
-    # cadastro_no_banco_veiculo(cadastro)
-    
-    update_veiculo()
-    
+    while True:
+          
+        template.cabecalho("Cadastro Master Blaster Mega do Detran Barril")
+        template.texto_menu("[1] Criar Banco de Dados")
+        template.texto_menu("[2] Cadastrar")
+        template.texto_menu("[3] Atualizar Cadastro")
+        template.texto_menu("[4] Deletar Cadastro")
+        template.texto_menu("[5] Mostrar Cadastros")
+        template.texto_menu("[6] Sair")
+        template.rodape()
+        
+        while True:
+            try:
+                resp = int(input("Selecione uma opção:\n"))
 
+                if resp not in range(1,7):
+                    print("Você digitou uma opção inválida. Tente novamente!")
+                    continue
+                
+                else:
+                    break
+            
+            except:
+                print("Você digitou uma opção inválida. Tente novamente!")
+                continue
+            
+        if resp == 1:
+            criar_tabelas()
+            sleep(1)
+            
+        elif resp == 2:
+            while True:
+                cadastrar_no_banco()
+                resp = input("Você gostaria de realizar outro "
+                             "cadastro? [S/N]\n").lower().strip()[0]
+                
+                if resp in "sn" and resp != "" and resp != " ":
+                    continue
+                
+                else:
+                    break
+                
+        elif resp == 3:
+            update()
+        
+        elif resp == 4:
+            apresentar_banco()
+        
+        elif resp == 5:
+            deletar_no_banco()
+        
+        elif resp == 6:
+            print("Obrigado por usar nossos serviços!")
+            break
+        
+        else:
+            print("Ops, algo deu errado. Tente novamente!")
+            sleep(1)
+        
 if __name__ == "__main__":
     main()
     

@@ -1,51 +1,119 @@
 import sqlite3
 from veiculos import Pessoa, Veiculo
+import template as template
 
-def cadastro_nos_bancos(cadastro):
+def cadastrar_no_banco():
+    # template.cabecalho("Cadastro")
+    # template.texto_menu("[1] Pessoa")
+    # template.texto_menu("[2] Veículo")
+    # template.rodape()
+    
+    while True:
+        try:
+            resp = int(input("Selecione uma opção:\n"))
+
+            if resp not in range(1,3):
+                print("Você digitou uma opção inválida. Tente novamente!")
+                continue
+            
+            else:
+                break
+        
+        except:
+            print("Você digitou uma opção inválida. Tente novamente!")
+            continue
+        
     conn = sqlite3.connect("Cadastro_Geral.db")
     cursor = conn.cursor()
     
-    
-    try:
-        cursor.execute("""
-            INSERT INTO Cadastro_veiculo(marca, nome, modelo, placa,
-            proprietario, cor, km_rodado, qte_passageiros, motor,
-            combustivel, meio_locomocao, valor)
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?) 
-            """, cadastro[0])
-
+    if resp == 1:
+        
+        nome = input("Nome:\n")
+        data_nascimento = input("Data de nascimento:\n")
+        cpf = input("CPF:\n")
+        endereco = input("Endereço:\n")
+        salario = float(input("Salário:\n"))
+        profissao = input("Profissão:\n")
+        telefone = input("Telefone:\n")
+        nome_responsavel = input("Nome do Responsável:\n")
+        sexo = input("Sexo:\n")
+        naturalidade = input("Naturalidade:\n")
+        nacionalidade = input("Nacionalidade:\n")
+        
+        pessoa = Pessoa(nome, data_nascimento, cpf, endereco, salario,
+                        profissao, telefone, nome_responsavel, sexo,
+                        naturalidade, nacionalidade)
+        
+        
+        cadastro_pessoa = (pessoa.nome, pessoa.data_nascimento, pessoa.cpf, pessoa.endereco,
+             pessoa.salario, pessoa.profissao, pessoa.telefone,
+             pessoa.nome_responsavel, pessoa.sexo, pessoa.naturalidade,
+             pessoa.nacionalidade, 0)
+        
+        try:
+            cursor.execute("""
+                INSERT INTO Cadastro_pessoa(nome, data_nascimento, cpf, endereco,
+                salario, profissao, telefone, nome_responsavel, sexo,
+                naturalidade, nacionalidade, veiculo_id)
+                VALUES(?,?,?,?,?,?,?,?,?,?,?,?) 
+                """, cadastro_pessoa)
+            
+        except Exception as ex:
+            conn.rollback()
+            template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+            message = template.format(type(ex).__name__, ex.args)
+            print(message)
+            
         conn.commit()
         
-        print("Cadastro efetuado com sucesso!")
+    if resp == 2:
+        
+        marca = input("Marca:\n")
+        nome = input("Nome do carro:\n")
+        modelo = input("Modelo:\n")
+        placa = input("Placa:\n")
+        proprietario = input("Proprietário:\n")
+        cor = input("Cor:\n")
+        km_rodado = input("Kilometros rodados:\n")
+        qte_passageiros = input("Quantidade de lugares:\n")
+        motor = input("Motor:\n")
+        combustivel = input("Combustível:\n")
+        meio_locomocao = input("Meio de locomoção:\n")
+        valor = input("Valor:\n")
+        
+        carro = Veiculo(marca, nome, modelo, placa, proprietario, cor,
+                        km_rodado, qte_passageiros, motor, combustivel,
+                        meio_locomocao, valor)
+        
+        cadastro_veiculo = (carro.marca, carro.nome, carro.modelo, carro.placa,
+            carro.proprietario, carro.cor, carro.km_rodado,
+            carro.qte_passageiros, carro.motor, carro.combustivel,
+            carro.meio_locomocao, carro.valor)
+        
+        try:
+            cursor.execute("""
+                INSERT INTO Cadastro_veiculo(marca, nome, modelo, placa,
+                proprietario, cor, km_rodado, qte_passageiros, motor,
+                combustivel, meio_locomocao, valor)
+                VALUES(?,?,?,?,?,?,?,?,?,?,?,?) 
+                """, cadastro_veiculo)
 
-    except Exception as ex:
-        conn.rollback()
-        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-        message = template.format(type(ex).__name__, ex.args)
-        print(message)
-    
-    try:
-        cursor.execute("""
-            INSERT INTO Cadastro_pessoa(nome, data_nascimento, cpf, endereco,
-            salario, profissao, telefone, nome_responsavel, sexo,
-            naturalidade, nacionalidade, veiculo_id)
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?) 
-            """, cadastro[1])
-        
-    except Exception as ex:
-        conn.rollback()
-        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-        message = template.format(type(ex).__name__, ex.args)
-        print(message)
-        
-    conn.commit()
+            conn.commit()
+            
+            print("Cadastro efetuado com sucesso!")
+
+        except Exception as ex:
+            conn.rollback()
+            template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+            message = template.format(type(ex).__name__, ex.args)
+            print(message)
     
         
-    cursor.execute("""
-        SELECT * FROM Cadastro_pessoa INNER JOIN Cadastro_veiculo ON Cadastro_pessoa.veiculo_id = Cadastro_veiculo.id
-        """)
+    # cursor.execute("""
+    #     SELECT * FROM Cadastro_pessoa INNER JOIN Cadastro_veiculo ON Cadastro_pessoa.veiculo_id = Cadastro_veiculo.id
+    #     """)
     
-    print(cursor.fetchall())
+    # print(cursor.fetchall())
     
     conn.close()
 
@@ -103,7 +171,7 @@ def criar_tabelas():
     conn.close()
 
 
-def deletar_nos_bancos(): 
+def deletar_no_banco(): 
     conn = sqlite3.connect('Cadastro_Geral.db')
     cursor = conn.cursor()
 
@@ -147,20 +215,20 @@ def deletar_nos_bancos():
     conn.close()
 
 
-def update_veiculo():
+def update():
     conn = sqlite3.connect('Cadastro_Geral.db')
     cursor = conn.cursor()
 
-    escolha = int(input("Você gostaria de atualizar\n\n [1] Pessoa\n\n"
-                        "[2] Veículo?\n\n"))
+    escolha = int(input("Você gostaria de atualizar?\n\n[1] Pessoa\n\n"
+                        "[2] Veículo\n\n"))
     
     if escolha == 1:
         lista = cursor.execute("""PRAGMA table_info(Cadastro_pessoa)""")
-        print("Você optou por alterar cadastro em um veículo.")
+        print("Você optou por alterar cadastro em uma pessoa.\n")
         
     elif escolha == 2:
         lista = cursor.execute("""PRAGMA table_info(Cadastro_veiculo)""")
-        print("Você optou por alterar cadastro em um veículo.")
+        print("Você optou por alterar cadastro em um veículo.\n")
     
     opcoes = []
     
@@ -177,8 +245,8 @@ def update_veiculo():
     
     id_cliente = int(input("\nInsira o id que você deseja alterar:\n"))
     
-    atualizacao = input(f"Insira a nova informação para atualizar o "
-                        f"campo {campo_atualizar}")
+    atualizacao = input(f"\nInsira a nova informação para atualizar o campo "
+                        f"{campo_atualizar}:\n")
     
     # alterando os dados da tabela
     if escolha == 1:
@@ -198,72 +266,46 @@ def update_veiculo():
     conn.commit()
     
     conn.close()
-
-
-def atualiza_informacoes(id_veiculos, nome, modelo, ano, placa, proprietario, num_portas, qtd_passageiros, motor, meio_locomocao):
-
-    cursor.execute("""
-
-    UPDATE veiculos
-
-    SET nome = ?, modelo = ?, ano = ?, placa = ?,proprietario = ?, num_portas = ?, qtd_passageiros = ?, motor = ?, 
-
-    meio_locomocao = ?
-
-    # WHERE id = ?
-
-    """, (nome, modelo, ano, placa, proprietario, num_portas, qtd_passageiros, motor, meio_locomocao,id_veiculos))
-
-    conn.commit()
-
-
-# atualiza_informacoes(1,"Siena", "Sedan", "2017", "ABC-1234", "Amanda","4", "2", "1.0", "Carro")
-
-# conn.close()
-
-
     
-carro = Veiculo("Volkswagen", "Gol", "Hatch", "ABC-1234", "Arthur",
-                "Branca", 13500, 5, 1.6, "Flex", "Terrestre", 13500)
 
-cadastro1 = (carro.marca, carro.nome, carro.modelo, carro.placa,
-            carro.proprietario, carro.cor, carro.km_rodado,
-            carro.qte_passageiros, carro.motor, carro.combustivel,
-            carro.meio_locomocao, carro.valor)
+def apresentar_banco():
+    conn = sqlite3.connect('Cadastro_Geral.db')
+    cursor = conn.cursor()
 
-pessoa = Pessoa("Arthur", "25/12/1900", 33322211156, "Rua dos bobos 0",
-                50000, "Desempregado", 47999871523, "Mamãe", "Masculino",
-                "Blumenauense", "Brasileiro")
+    if True:
+        lista = cursor.execute("""PRAGMA table_info(Cadastro_pessoa)""")
+        
+        opcoes = []
+    
+        for opcao in lista:
+            opcoes.append(opcao[1])
+        opcoes = tuple(opcoes)
+            
+        cursor.execute("""
+        SELECT * FROM Cadastro_pessoa
+        """)
 
-cadastro2 = (pessoa.nome, pessoa.data_nascimento, pessoa.cpf, pessoa.endereco,
-             pessoa.salario, pessoa.profissao, pessoa.telefone,
-             pessoa.nome_responsavel, pessoa.sexo, pessoa.naturalidade,
-             pessoa.nacionalidade, 1)
+        matriz = [opcoes]
+        
+        for linha in cursor.fetchall():
+            matriz.append(linha)
 
-cadastro = [cadastro1, cadastro2]
+        for linha in matriz:
+            print()
+            for x in linha:
+                print(x, end = " ")
+            
+            
+            print()
+        
+                        
+                # for categoria in linha:
+                #     print(categoria, end = " ")
 
-cadastro_nos_bancos(cadastro)
-
-pessoa = Pessoa("Maria", "25/12/1900", 33322211156, "Rua dos bobos 0",
-                50000, "Desempregado", 47999871523, "Mamãe", "Masculino",
-                "Blumenauense", "Brasileiro")
-
-carro = Veiculo("Ford", "Fiesta", "Hatch", "ABC-1234", "Arthur",
-                "Branca", 13500, 5, 1.6, "Flex", "Terrestre", 13500)
-
-cadastro1 = (carro.marca, carro.nome, carro.modelo, carro.placa,
-            carro.proprietario, carro.cor, carro.km_rodado,
-            carro.qte_passageiros, carro.motor, carro.combustivel,
-            carro.meio_locomocao, carro.valor)
+            # matrix_column = [y[index - 1] for y in self.matrix_int]
+        
+        
+    # elif escolha == 2:
+    #     lista = cursor.execute("""PRAGMA table_info(Cadastro_veiculo)""")
 
 
-cadastro2 = (pessoa.nome, pessoa.data_nascimento, pessoa.cpf, pessoa.endereco,
-             pessoa.salario, pessoa.profissao, pessoa.telefone,
-             pessoa.nome_responsavel, pessoa.sexo, pessoa.naturalidade,
-             pessoa.nacionalidade, 2)
-
-cadastro = [cadastro1, cadastro2]
-
-cadastro_nos_bancos(cadastro)
-
-deletar_nos_bancos()
