@@ -57,8 +57,8 @@ def main():
         template.texto_menu("[1] Criar Banco de Dados")
         template.texto_menu("[2] Cadastrar")
         template.texto_menu("[3] Atualizar Cadastro")
-        template.texto_menu("[4] Deletar Cadastro")
-        template.texto_menu("[5] Mostrar Cadastros")
+        template.texto_menu("[4] Mostrar Cadastros")
+        template.texto_menu("[5] Deletar Cadastro")
         template.texto_menu("[6] Sair")
         template.rodape()
         
@@ -88,10 +88,10 @@ def main():
                              "cadastro? [S/N]\n").lower().strip()[0]
                 
                 if resp in "sn" and resp != "" and resp != " ":
-                    continue
+                    break
                 
                 else:
-                    break
+                    continue
                 
         elif resp == 3:
             update()
@@ -99,8 +99,17 @@ def main():
         elif resp == 4:
             apresentar_banco()
         
-        elif resp == 5:
-            deletar_no_banco()
+        elif resp == 5:  
+            while True:
+                deletar_no_banco()
+                resp = input("Você gostaria de deletar outro "
+                             "cadastro? [S/N]\n").lower().strip()[0]
+                
+                if resp in "sn" and resp != "" and resp != " ":
+                    break
+                
+                else:
+                    continue
         
         elif resp == 6:
             print("Obrigado por usar nossos serviços!")
